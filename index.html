@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/css/style.css">
     <script type="text/javascript" src="assets/javascript/game.js"></script>
     <title>Document</title>
 </head>
@@ -11,6 +12,7 @@
 
     <div id="game">
         <span id="start">
+          Click on the button to start the game!
           <button onclick="game.start()">
             start
           </button>
@@ -21,13 +23,16 @@
           </strong>
         </p>
         <p>
-          <strong>
-            <span id="npc1"></span>
-          </strong>
+          Your guess:
+          <br>
+            <span id="userGuess" onkeyup="event"></span>
+          
         </p>
         <p>
+          Wrong letters:
+          <br>
           <strong>
-            <span id="message1"></span>
+            <span id="wrong"></span>
           </strong>
         </p>
         <p>

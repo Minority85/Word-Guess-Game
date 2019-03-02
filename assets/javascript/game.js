@@ -1,49 +1,89 @@
+var userInput;
+
 var game = {
 
-    words: ["Khaleesi", "Maester", "House of Stark", "Kahl Drogo", "White Walkers", "Mother of Dragons", "The Red Wedding"],
+    words: ["Khaleesi", "Maester", "House of Stark", "Mother of Dragons", "Winter is Coming", "Brotherhood Without Banners",
+        "NIGHTS WATCH", "Kings Landing", "The Iron Throne", "Warden of the North", "Khal Drogo", "The Red Wedding"],
     letters: "",
     lives: 12,
     reset: false,
     random: "",
-    ranWord: "",
+    ranWord: "#",
     underscore: [],
 
-    start: function() {
+    start: function () {
         this.underscore = [];
+        this.lives = 12;
+        this.letters = "";
 
         this.random = this.words[Math.floor(Math.random() * this.words.length)];
-        
+
         this.ranWord = this.random;
 
-        for(var i = 0; i < this.ranWord.length; i++) {
+        for (var i = 0; i < this.ranWord.length; i++) {
 
             if (this.ranWord[i] === " ") {
-                this.underscore[i] = " ";
+                this.underscore = this.underscore + " ";
             }
             else {
-                this.underscore[i] = "_";   
-            } 
+                this.underscore = this.underscore + "_";
+            }
         }
-        return underscore;
 
-        document.getElementById("wordfield").textContent = this.underscore;
-        
+        document.getElementById("wordfield").innerHTML = this.underscore;
+
         console.log(this.ranWord);
         console.log(this.underscore);
+        console.log(this.ranWord.length);
+        console.log(this.underscore.length);
+    },
 
-        
-    }
-}
+    logic: function () {
 
-console.log(game.underscore);
+        for (var j = 0; j < this.ranWord.length; j++) {
 
-document.onkeyup = function () {
 
-    var userInput = event.key;
+            if (this.ranWord[j].toLowerCase() === userInput.toLowerCase()) {
 
-    // var random = game.words[Math.floor(Math.random() * game.words.length)];
+                this.underscore = game.replaceAt(this.underscore, j, userInput.toUpperCase());
 
-    // if (userInput === "q"){
-    //     game.test(random);
-    // }
+                console.log(this.underscore);
+
+            }
+        }
+
+        if (this.ranWord.toLowerCase() === userInput.toLowerCase()) {
+            ;
+        }
+        else {
+            this.letters += userInput.toUpperCase();
+        }
+
+        document.getElementById("wrong").innerHTML = this.letters;
+        document.getElementById("wordfield").innerHTML = this.underscore;
+
+        if (this.underscore === this.ranWord) {
+            setTimeout(function () {
+                game.win()
+            }, 1000)
+        }
+    },
+
+    replaceAt: function (string, index, replace) {
+        return string.substring(0, index) + replace + string.substring(index + 1);
+    },
+
+    win: function () {
+        alert("You Win!");
+    },
+};
+
+document.onkeyup = function (event) {
+
+    userInput = event.key;
+
+    game.logic();
+
+    console.log(userInput);
+    document.getElementById("userGuess").innerHTML = userInput;
 }
