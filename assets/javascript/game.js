@@ -20,7 +20,9 @@ var game = {
         document.getElementById("wrong").innerHTML = this.letters;
         document.getElementById("userGuess").innerHTML = "";
         document.getElementById("chances").innerHTML = this.lives;
-        // document.getElementById('sound1').play();
+        document.getElementById('winsound').pause();
+        document.getElementById('sound1').play();
+        document.getElementById("btnPlaceOrder").disabled = true; 
 
 
         this.random = this.words[Math.floor(Math.random() * this.words.length)];
@@ -99,13 +101,11 @@ var game = {
         }
 
         if (check === this.underscore) {
-            if (this.letters.charAt(0) === userInput.toUpperCase() || this.letters.charAt(1) === userInput.toUpperCase() ||
-                this.letters.charAt(2) === userInput.toUpperCase() || this.letters.charAt(3) === userInput.toUpperCase() ||
-                this.letters.charAt(4) === userInput.toUpperCase() || this.letters.charAt(5) === userInput.toUpperCase() ||
-                this.letters.charAt(6) === userInput.toUpperCase() || this.letters.charAt(7) === userInput.toUpperCase() ||
-                this.letters.charAt(8) === userInput.toUpperCase() || this.letters.charAt(9) === userInput.toUpperCase() ||
-                this.letters.charAt(10) === userInput.toUpperCase() || this.letters.charAt(11) === userInput.toUpperCase()) {
+            if (game.check3()) {
 
+            }
+            else if (game.check2()){
+                
             }
             else {
                 this.letters += userInput.toUpperCase();
@@ -119,6 +119,7 @@ var game = {
 
         if (this.underscore === this.ranWord) {
             document.getElementById('sound1').pause();
+            document.getElementById('winsound').play();
             setTimeout(function () {
                 game.win()
             }, 500)
@@ -136,17 +137,41 @@ var game = {
         return string.substring(0, index) + replace + string.substring(index + 1);
     },
 
+    check2: function() {
+
+        for (var j = 0; j < this.ranWord.length; j++) {
+
+            if (this.ranWord[j].toLowerCase() === userInput.toLowerCase()) {
+
+                return true;
+
+            }
+        }
+    },
+
+    check3: function() {
+
+        for (var k = 0; k < this.ranWord.length; k++) {
+
+            if (this.letters.charAt(k) === userInput.toUpperCase()) {
+
+                return true;
+
+            }
+        }
+    },
+
     win: function () {
-        document.getElementById('winsound').play();
-        alert("You Win!");
+        
         ++this.wins
         document.getElementById("wins").innerHTML = this.wins;
+        alert("You Win! But Westeros still needs you! Gather your bannerman and continue!");
         game.start();
     },
 
     lose: function () {
         document.getElementById('losesound').play();
-        alert("You Lose!");
+        alert("You Lose! ");
         ++this.loses;
         document.getElementById("loses").innerHTML = this.loses;
         game.start();
